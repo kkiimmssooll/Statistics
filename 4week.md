@@ -77,7 +77,7 @@ sns.stripplot() # 각 관측치의 위치
 - 두 변수의 공분산을 두 변수가 변하는 전체 정도로 나눠준 것
 - -1<=R<=1
     > 0.7 이상이면 상관관계가 매우 높다고 판단, 0.4 이상이면 어느 정도 상관관계가 있음
-    ⚠️ 산점도의 기울기와 상관계수는 관련이 없고, 분산의 관계성이 같으면 기울기에 상관없없이 상관계수는 같음
+    > ⚠️ 산점도의 기울기와 상관계수는 관련이 없고, 분산의 관계성이 같으면 기울기에 상관없이 상관계수는 같음
 ![statweek_1](/git_stat/10.2.png)
 > 기울기는 모두 다르지만 상관계수는 모두 1
 > 즉 상관계수가 높다는 것은 한 변수가 움직일 때 다른 변수를 예상하는 정확도(설명력)가 높아진다는 것
@@ -152,7 +152,7 @@ plt.scatterplot(df['a'],df['b'],s=50,alpha=0.4) # s로 크기, alpha로 투명�
 ## 10.7 공간 시각화
 1. 도트맵
 2. 버블맵
-    - 비율 비교에 효과적적
+    - 비율 비교에 효과적
 3. 코로플레스맵
     - 트리맵이랑 비슷하게 생겼다,, 그런데 실제 지도 기반이라 크기가 불규칙함
     ![statweek_7](/git_stat/10.7.png)
@@ -160,7 +160,7 @@ plt.scatterplot(df['a'],df['b'],s=50,alpha=0.4) # s로 크기, alpha로 투명�
     - 지도의 점들을 연결하여 지리적 관계 표현
 ```
 import folium
-from folium import Marker # MarkerCluster() 함수를 사용하여 숫자 표현 가능능
+from folium import Marker # MarkerCluster() 함수를 사용하여 숫자 표현 가능
 from folium import plugins
 from folium import GeoJson
 import plotly.express as px
