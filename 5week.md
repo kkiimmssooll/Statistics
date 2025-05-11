@@ -165,16 +165,36 @@ pd.cut(df1.BMI, q = 5, labels=['a','b','c','d','e]) # qcut
 ## 11.4. 데이터 표준화와 정규화 스케일링
 ### 표준화
 - 각 관측치의 값이 전체 평균을 기준으로 어느 정도 떨어져 있는지 나타낼 때 사용
+- 평균을 0으로 변환
 
 ### 정규화
 - 데이터의 범위를 0부터 1까지로 변환하여 데이터 분포를 조정
+- 전체 데이터 중 해당 값이 어떤 위치에 있는지 파악할 때 유용
+
+### RobustScaler
+- 이상치의 영향력을 최소화
 
 ![statweek_2](/git_stat/11.4.png)
+![statweek_3](/git_stat/11.4.1.png)
+
+```
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import RobustScaler
+
+df_stand = StandardScaler.fit_transform(df) # 평균은 0에, 분산은 1에 가까워짐
+df_minmax = MinMaxScaler.fit_transform(df) # 모든 데이터 값이 0과 1 사이로 변환
+df_robust = RobustScaler.fit_transform(df) # 평균과 분포가 유사하게 변환
+```
 
 ## 11.5. 모델 성능 향상을 위한 파생 변수 생성
-<!-- 새롭게 배운 내용을 자유롭게 정리해주세요. -->
-
-
+> EDA 및 도메인 이해를 통해 생성
+![statweek_4](/git_stat/11.5.png)
+![statweek_5](/git_stat/11.5.1.png)
+```
+⚠️ 기존 변수들을 활용하여 생성하므로 다중공선성 문제가 발생할 수 있음
+    -> 파생변수 생성 후 상관분석을 통해 상관성을 확인하자
+```
 
 <br>
 <br>
@@ -197,7 +217,7 @@ pd.cut(df1.BMI, q = 5, labels=['a','b','c','d','e]) # qcut
     - 데이터셋에서 `소득` 변수의 결측 비율은 15%이다.
 
 ```
-여기에 답을 작성해주세요!
+3️⃣
 ```
 
 ## 문제 2. 데이터 스케일링
@@ -207,7 +227,7 @@ pd.cut(df1.BMI, q = 5, labels=['a','b','c','d','e]) # qcut
 <!--표준화와 정규화의 차이점에 대해 고민해보세요.-->
 
 ```
-여기에 답을 작성해주세요!
+표준화
 ```
 
 ### 🎉 수고하셨습니다.
