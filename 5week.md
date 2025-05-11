@@ -189,8 +189,10 @@ df_robust = RobustScaler.fit_transform(df) # 평균과 분포가 유사하게 �
 
 ## 11.5. 모델 성능 향상을 위한 파생 변수 생성
 > EDA 및 도메인 이해를 통해 생성
+
 ![statweek_4](/git_stat/11.5.png)
 ![statweek_5](/git_stat/11.5.1.png)
+
 ```
 ⚠️ 기존 변수들을 활용하여 생성하므로 다중공선성 문제가 발생할 수 있음
     -> 파생변수 생성 후 상관분석을 통해 상관성을 확인하자
