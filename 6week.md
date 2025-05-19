@@ -105,21 +105,87 @@ df_concat = pd.concat([df_pca,df[['Type']]], axis = 1)
 # 산점도 시각화
 sns.scatterplot(data=df_concat, x = 'C1', y='C2', hue='Type')
 ```
-![statweek_4](/git_stat/12.34.png)
+![statweek_4](/git_stat/12.4.png)
 > 이렇게 산점도를 그렸을 때 각각의 Type이 떨어져 있어야 분류 성능이 좋을 가능성이 높음
 
 ## 12.4. 다중공선성 해결과 섀플리 밸류 분석
-<!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+> 두 개 이상의 독립변수가 서로 선형적인 관계를 나타낼 때 다중공선성이 있다고 말함
+
+💡 다중공선성 판별 기준
+1. 회귀 분석 모델을 실행하기 위해 상관분석을 통해 독립 변수 간 상관성을 확인하여 높은 상관계수를 갖는 독립변수 찾기(상관계수의 절대치가 0.7 이상이면 상관성이 높음)
+2. 결정계수 값은 크지만 회귀변수에 대한 t값이 낮은 경우
+3. VIF가 큰 변수는 다른 변수들과의 상관성이 높음
+
+### 섀플리 밸류 분석
+> 해당 변수를 모델에 투입했을 때 설명력에 어느 정도의 기여를 하는지 측정할 수 있는 기준값
 
 ## 12.6. Z-test와 T-test
-<!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+> 두 집단 간의 평균 차이를 분석
+
+⚠️ 조건
+1. 양적 변수
+2. 정규 분포
+3. 등분산->bartlett 등분산성 검정을 통해 확인
+
+![statweek_5](/git_stat/12.5.png)
+
+- 평균 차이가 클수록, 표본의 수가 클수록 t값은 증가
+- t값이 기각역 경계 안에 들어오면 대립가설을 기각하고 귀무가설을 채택
+
+```
+# 정규성 검정
+shapiro(df['TypeA_before']) 
+
+# 등분산성 검정
+stats.bartlett(df['TypeA_before']) 
+
+# Z-test(양측검정일 경우)
+ztest(df['TypeA_before'], x2=df['TypeA_after'])
+
+# t검정
+ttest_ind(df['TypeA_before'], df['TypeB_before'], equal_var=False)
+```
 
 ## 12.7. ANOVA
-<!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+> 두 집단 이상의 평균 차이를 분석->각 집단의 평균값 차이가 통계적으로 유의한가?
+
+> 집단 내 분산과 집단 평균의 분산이 사용됨
+
+✅ t-test를 통해서 세 집단 이상 분석도 가능함! 하지만 이러한 경우 여러번 중복하여 검정하면 신뢰도가 하락함
+
+- F분포(집단 간 분산의 비율)를 사용
+- 독립변수는 범주형 변수, 종속변수는 연속형 변수여야 함
+```
+# 일원분산분석
+F_statistic, pVal = stats.f_oneway(df['TypeA_before'], df['TypeB_before'], df['TypeC_before'])
+
+# 데이터 재구조화
+df2 = pd.melt(df) # variable/value 조합으로
+
+# ols 패키지 아노바 검정
+model = ols('value~C(variable)', df2).fit()
+anova_lm(model)
+```
 
 ## 12.8. 카이제곱 검정(교차분석)
-<!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+> 범주형 변수들 간의 연관성을 분석하기 위해 결합분포를 활용
 
+```
+# 항목별 집계
+df.groupby(['sex','smoke'])['smoke'].count() # sex와 smoke를 기준으로 smoke 카운트
+
+# 교차표 가공
+ct = pd.crosstab(df.sex, df.smoke)
+
+# 막대그래프 시각화
+ct.plot(kind='bar', figsize=(10,5))
+plt.grid()
+
+# 카이제곱 검정
+chiresult = chi2_contigency(ct, correction=False)
+print('Chi square : {}'.format(chiresult[0]))
+print('P-value : {}'.format(chiresult[1]))
+```
 
 
 
